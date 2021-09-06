@@ -1,0 +1,19 @@
+// export const stripe = {
+//   charges: {
+//     create: jest.fn()
+//     .mockImplementation(
+//       (curreny: string, amount: number, source: string): Promise<{result:string}>=>{
+//         if(source === "tok_visa")
+//           return Promise.resolve({result:"success"});
+//         else
+//           return Promise.reject("Invalid token");
+//       }
+//     )
+//   }
+// };
+
+export const stripe = {
+  charges: {
+    create: jest.fn().mockResolvedValue({result:"success"})
+  }
+};

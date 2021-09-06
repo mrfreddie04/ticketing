@@ -1,0 +1,36 @@
+{
+  "name": "expiration",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev --poll src/index.ts",
+    "test": "jest --watchAll --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@monroe-computer-technology/common": "^1.0.12",
+    "@types/bull": "^3.15.4",
+    "bull": "^3.29.1",
+    "node-nats-streaming": "^0.3.2",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "@types/supertest": "^2.0.11",
+    "jest": "^27.1.0",
+    "mongodb-memory-server": "^7.3.6",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.5"
+  },
+  "description": ""
+}
