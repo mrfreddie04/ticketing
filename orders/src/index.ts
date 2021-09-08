@@ -7,6 +7,7 @@ import { ExpirationCompleteListener } from './events/listeners/expiration-comple
 import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
 
 const start = async () => {
+  console.log("Starting Orders Service...");
   if(!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defined");
   }
@@ -31,9 +32,13 @@ const start = async () => {
       process.env.NATS_URL
     );
 
+    console.log("Orders NATS Client", process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL);    
+
     //Graceful shutdown - when close event is received from NATS Serice (usually in response to client.close())
     natsWrapper.client.on("close", ()=>{
-      console.log("Orders: NATS connection closed! Exiting...");
+      console.log("Orders NATS connection closed! Exiting...");
       process.exit();
     });    
 
@@ -50,7 +55,7 @@ const start = async () => {
     ticketUpdatedListener.listen();
     expirationCompleteListener.listen();
     paymentCreatedListener.listen();
-    console.log("Orders: Listeners started");
+    console.log("Orders Listeners started");
 
     //Mongoose configuration/connection
     await mongoose.connect(process.env.MONGO_URI, {
@@ -58,7 +63,7 @@ const start = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true
     });
-    console.log("Orders: Connected to mongodb");
+    console.log("Orders Connected to mongodb", process.env.MONGO_URI);
   } catch(err) {
     console.log("err")
   }
@@ -66,10 +71,7 @@ const start = async () => {
   //Web server startup
   app.listen(3000, ()=>{
     console.log("Orders Service listening on port 3000!!!");
-    console.log("Orders Mongo DB", process.env.MONGO_URI);
-    console.log("Orders NATS Client", process.env.NATS_CLUSTER_ID,
-      process.env.NATS_CLIENT_ID,
-      process.env.NATS_URL);
+    console.log("Orders Service is running...");  
   });  
 };
 
