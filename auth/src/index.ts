@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
+  console.log("Starting Auth Service...");
   if(!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defined");
   }
@@ -15,14 +16,14 @@ const start = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true
     });
-    console.log("Connected to mongodb");
+    console.log("Auth Service connected to mongodb", process.env.MONGO_URI);
   } catch(err) {
     console.log("err")
   }
 
   app.listen(3000, ()=>{
     console.log("Auth Service listening on port 3000!!!");
-    console.log("Auth Mongo DB", process.env.MONGO_URI);    
+    console.log("Auth Service is running...");    
   });  
 };
 

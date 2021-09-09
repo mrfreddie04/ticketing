@@ -22,12 +22,17 @@ const start = async () => {
   }  
 
   try {
+    console.log("Payments Service starting...");
     
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
       process.env.NATS_URL
     );
+
+    console.log("Payments NATS Client started", process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL);    
 
     natsWrapper.client.on("close", ()=>{
       console.log("NATS connection closed! Exiting...");
@@ -43,17 +48,14 @@ const start = async () => {
     orderCancelledListener.listen();
 
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("Connected to mongodb");
+    console.log("Payments Service connected to Mongo DB ", process.env.MONGO_URI);
   } catch(err) {
     console.log("err")
   }
 
   app.listen(3000, ()=>{
     console.log("Payments Service listening on port 3000!!!");
-    console.log("Payments Mongo DB", process.env.MONGO_URI);
-    console.log("Payments NATS Client", process.env.NATS_CLUSTER_ID,
-      process.env.NATS_CLIENT_ID,
-      process.env.NATS_URL);
+    console.log("Payments Service running...");
   });  
 };
 
