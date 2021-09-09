@@ -18,7 +18,7 @@ const start = async () => {
     });
     console.log("Auth Service connected to mongodb", process.env.MONGO_URI);
   } catch(err) {
-    console.log("err")
+    console.log("Auth Service failed to connect to mongodb")
   }
 
   app.listen(3000, ()=>{
