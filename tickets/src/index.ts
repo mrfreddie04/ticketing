@@ -22,7 +22,7 @@ const start = async () => {
   }  
 
   try {
-    
+    console.log("Tickets Service starting...");
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
