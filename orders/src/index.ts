@@ -33,13 +33,13 @@ const start = async () => {
       process.env.NATS_URL
     );
 
-    console.log("Orders NATS Client", process.env.NATS_CLUSTER_ID,
+    console.log("Orders Service connected to NATS", process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
       process.env.NATS_URL);    
 
     //Graceful shutdown - when close event is received from NATS Serice (usually in response to client.close())
     natsWrapper.client.on("close", ()=>{
-      console.log("Orders NATS connection closed! Exiting...");
+      console.log("Orders Service closed connection to NATS...");
       process.exit();
     });    
 
@@ -56,7 +56,7 @@ const start = async () => {
     ticketUpdatedListener.listen();
     expirationCompleteListener.listen();
     paymentCreatedListener.listen();
-    console.log("Orders Listeners started");
+    console.log("Orders Service Listeners started");
 
     //Mongoose configuration/connection
     await mongoose.connect(process.env.MONGO_URI, {
@@ -64,9 +64,9 @@ const start = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true
     });
-    console.log("Orders Connected to mongodb", process.env.MONGO_URI);
+    console.log("Orders Service Connected to mongodb", process.env.MONGO_URI);
   } catch(err) {
-    console.log("err")
+    console.log("Orders Service failed to connect to mongodb")
   }
 
   //Web server startup
